@@ -80,6 +80,8 @@ namespace Mastermind
             Tijd.Text = $"{elapsedTime.Seconds}:{elapsedTime.Milliseconds.ToString().PadLeft(3, '0')}";
         }
 
+        
+
         public void TitelAppearsAbove()
         {
             Random rnd = new Random();
@@ -96,11 +98,11 @@ namespace Mastermind
         {
             Debug.Text = "Hallo";
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public void Button_Click(object sender, RoutedEventArgs e)
         {
             timer.Start();
             clicked = DateTime.Now;
-
+            
             string kleur1 = ComboBox1.SelectedItem?.ToString();
             string kleur2 = ComboBox2.SelectedItem?.ToString();
             string kleur3 = ComboBox3.SelectedItem?.ToString();
@@ -131,7 +133,16 @@ namespace Mastermind
                 }
             }
         }
+        private void stopcountdown(object sender, EventArgs e)
+        {
+            DateTime nu = DateTime.Now;
+            double timeDelta = elapsedTime.TotalSeconds;
 
+            if (10 > timeDelta)
+            {
+                timer.Stop();
+            }
+        }
         private void ResetBorder()
         {
             kleur1Border.BorderBrush = Brushes.Gray;
