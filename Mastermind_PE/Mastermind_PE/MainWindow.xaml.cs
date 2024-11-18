@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Reflection.Emit;
@@ -16,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Mastermind
 {
@@ -29,6 +31,10 @@ namespace Mastermind
         private string TitelAppears3;
         private string TitelAppears4;
         int attempts = 0;
+
+        private DispatcherTimer timer;
+        DateTime clicked;
+        TimeSpan elapsedTime;
         public MainWindow()
         {
             InitializeComponent();
@@ -62,6 +68,16 @@ namespace Mastermind
             ComboBox4.Items.Add("wit");
             ComboBox4.Items.Add("blauw");
 
+
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(1);
+            timer.Tick += startcountdown;
+        }
+
+        private void startcountdown(object sender, EventArgs e)
+        {
+            TimeSpan elapsedTime = DateTime.Now - clicked;
+            Tijd.Text = $"{elapsedTime.Seconds}:{elapsedTime.Milliseconds.ToString().PadLeft(3, '0')}";
         }
 
         public void TitelAppearsAbove()
@@ -75,16 +91,23 @@ namespace Mastermind
 
             this.Title = $"Mastermind ({TitelAppears1},{TitelAppears2},{TitelAppears3},{TitelAppears4})";
         }
+
+        private void toggledebug(DebuggerDisplayAttribute displayAttribute) 
+        {
+            Debug.Text = "Hallo";
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
+            timer.Start();
+            clicked = DateTime.Now;
+
             string kleur1 = ComboBox1.SelectedItem?.ToString();
             string kleur2 = ComboBox2.SelectedItem?.ToString();
             string kleur3 = ComboBox3.SelectedItem?.ToString();
             string kleur4 = ComboBox4.SelectedItem?.ToString();
-            
-            
-            attempts ++;
+
+
+            attempts++;
             this.Title = $"Mastermind ({TitelAppears1},{TitelAppears2},{TitelAppears3},{TitelAppears4}, poging: {attempts})";
 
             string[] correcteCode = { TitelAppears1, TitelAppears2, TitelAppears3, TitelAppears4 };
@@ -267,6 +290,8 @@ namespace Mastermind
             }
             TextBlock4.Text = $"Gekozen kleur: {kleur4}";
         }
+
+
 
     }
 }

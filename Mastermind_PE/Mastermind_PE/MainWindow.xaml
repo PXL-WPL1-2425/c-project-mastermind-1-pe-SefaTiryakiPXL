@@ -35,5 +35,8 @@
                 HorizontalAlignment="Left" Width="200" Height="130" Margin="600,22,0,0" VerticalAlignment="Top"/>
 
         <Button Content="Check code" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,150,0,0" Click="Button_Click" />
+        <TextBox BorderBrush="Transparent" Background="Transparent" Foreground="White" Name="Debug" HorizontalAlignment="Center" Margin="0,334,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200"/>
+        <TextBlock Name="Tijd" HorizontalAlignment="Left" Margin="109,284,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="140"/>
+
     </Grid>
 </Window>
